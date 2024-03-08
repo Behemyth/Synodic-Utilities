@@ -1,5 +1,4 @@
-"""Tests the scope of utilities
-"""
+"""Tests the scope of utilities"""
 
 import logging
 from logging import StreamHandler

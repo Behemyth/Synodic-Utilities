@@ -1,48 +1,45 @@
 """Utility definitions"""
 
 import re
-from typing import Any, NamedTuple, NewType
+from typing import NamedTuple, NewType
 
-PluginName = NewType("PluginName", str)
-PluginGroup = NewType("PluginGroup", str)
+TypeName = NewType("TypeName", str)
+TypeGroup = NewType("TypeGroup", str)
 
 
-class PluginID(NamedTuple):
-    """Normalized name"""
+class TypeID(NamedTuple):
+    """Represents a type ID with a name and group."""
 
-    name: PluginName
-    group: PluginGroup
+    name: TypeName
+    group: TypeGroup
 
 
 _canonicalize_regex = re.compile(r"((?<=[a-z])[A-Z]|(?<!\A)[A-Z](?=[a-z]))")
 
 
-def canonicalize_name(name: str) -> PluginID:
-    """Extracts the plugin identifier from an input string
+def canonicalize_name(name: str) -> TypeID:
+    """Extracts the type identifier from an input string
 
     Args:
         name: The string to parse
 
     Returns:
-        The plugin identifier
+        The type identifier
     """
 
     sub = re.sub(_canonicalize_regex, r" \1", name)
     values = sub.split(" ")
     result = "".join(values[:-1])
-    return PluginID(PluginName(result.lower()), PluginGroup(values[-1].lower()))
+    return TypeID(TypeName(result.lower()), TypeGroup(values[-1].lower()))
 
 
-def canonicalize_type(input_type: type[Any]) -> PluginID:
+def canonicalize_type(input_type: type[object]) -> TypeID:
     """Extracts the plugin identifier from a type
 
     Args:
         input_type: The input type to resolve
 
-    Raises:
-        ValueError: When the class name is incorrect
-
     Returns:
-        The plugin identifier
+        The type identifier
     """
     return canonicalize_name(input_type.__name__)
