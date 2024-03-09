@@ -1,7 +1,7 @@
 """Utility definitions"""
 
 import re
-from typing import NamedTuple, NewType
+from typing import Any, NamedTuple, NewType
 
 TypeName = NewType("TypeName", str)
 TypeGroup = NewType("TypeGroup", str)
@@ -33,7 +33,7 @@ def canonicalize_name(name: str) -> TypeID:
     return TypeID(TypeName(result.lower()), TypeGroup(values[-1].lower()))
 
 
-def canonicalize_type(input_type: type[object]) -> TypeID:
+def canonicalize_type(input_type: type[Any]) -> TypeID:
     """Extracts the plugin identifier from a type
 
     Args:
