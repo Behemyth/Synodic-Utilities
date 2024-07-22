@@ -15,3 +15,6 @@ class TestPlugin:
 
         assert MockPlugin.name() == "mock"
         assert MockPlugin.group() == "plugin"
+
+    def test_todo(self) -> None:
+        """Another test TODO"""
